@@ -52,7 +52,7 @@ jobs:
       name: 'tag format'
       env:
           TAG_FORMAT: "%Y-%m-%dT%H:%M:%S%z"
-      run: echo "::set-output name=tag::$(date +"${TAG_FORMAT})" 
+      run: echo "::set-output name=tag::$(date +${TAG_FORMAT})" 
     - name: 'docker build'
       run: |
         branch_name=$(echo ${{github.ref}} | rev | cut -d / -f 1 | rev)
