@@ -51,17 +51,17 @@ jobs:
     - name: 'docker build'
       run: |
         branch_name=$(echo ${{github.ref}} | rev | cut -d / -f 1 | rev)
-        docker build . --file Dockerfile --tag "asia-northeast2-docker.pkg.dev/${GCP_PROJECT}/testimage/busybox:${branch_name}"
+        docker build . --file Dockerfile --tag "asia-northeast2-docker.pkg.dev/${GCP_PROJECT}/${branch_name}/busybox:$(date +%s)"
       
     - name: 'docker deploy to artifact registry'
       run: |
         branch_name=$(echo ${{github.ref}} | rev | cut -d / -f 1 | rev)
-        docker push "asia-northeast2-docker.pkg.dev/${GCP_PROJECT}/testimage/busybox:${branch_name}"
+        docker push "asia-northeast2-docker.pkg.dev/${GCP_PROJECT}/${branch_name}/busybox:$(date +%s)"
     
     - name: 'deploy cloud run'
       uses: 'google-github-actions/deploy-cloudrun@v0'
       with:
         service: 'hello-cloud-run'
-        image: "asia-northeast2-docker.pkg.dev/${GCP_PROJECT}/testimage/busybox:${branch_name}"
+        image: "asia-northeast2-docker.pkg.dev/${GCP_PROJECT}/${branch_name}/busybox:$(date +%s)"
         region: 'asia-northeast2'
 
