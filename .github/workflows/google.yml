@@ -47,16 +47,21 @@ jobs:
 
     - name: 'configure-docker for artifact registry'
       run: gcloud auth configure-docker asia-northeast2-docker.pkg.dev
-      
+
+    - id: 'tag_format'
+      name: 'tag format'
+      env:
+          TAG_FORMAT: "%Y-%m-%dT%H:%M:%S%z"
+      run: echo "::set-output name=tag::$(date +"${TAG_FORMAT})" 
     - name: 'docker build'
       run: |
         branch_name=$(echo ${{github.ref}} | rev | cut -d / -f 1 | rev)
-        docker build . --file Dockerfile --tag "asia-northeast2-docker.pkg.dev/${GCP_PROJECT}/${branch_name}/busybox:$(date +%s)"
+        docker build . --file Dockerfile --tag "asia-northeast2-docker.pkg.dev/${GCP_PROJECT}/${branch_name}/busybox:${{ steps.tag_format.outputs.tag }}"
       
     - name: 'docker deploy to artifact registry'
       run: |
         branch_name=$(echo ${{github.ref}} | rev | cut -d / -f 1 | rev)
-        docker push "asia-northeast2-docker.pkg.dev/${GCP_PROJECT}/${branch_name}/busybox:$(date +%s)"
+        docker push "asia-northeast2-docker.pkg.dev/${GCP_PROJECT}/${branch_name}/busybox:${{ steps.tag_format.outputs.tag }}"
     
     # - name: 'deploy cloud run'
     #   uses: 'google-github-actions/deploy-cloudrun@v0'
