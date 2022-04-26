@@ -32,3 +32,18 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+##
+
+next exportとやるなら、
+cloudrunの中にapache+nextの中身とかになる。
+リバースプロキシでバックエンドのcloud runに渡す。
+
+squidのほうが良い？
+英語でもユースケースが少ないので、
+next export した上でWebApplicationは無謀な気がする。
+
+
+nextと同じImageの中にバックエンドのアプリも入れる。←表示変えたいだけなのに
+バックエンドごと中身変わることになるのでNG
+
