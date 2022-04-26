@@ -35,15 +35,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ##
 
-next exportとやるなら、
-cloudrunの中にapache+nextの中身とかになる。
-リバースプロキシでバックエンドのcloud runに渡す。
-
-squidのほうが良い？
-英語でもユースケースが少ないので、
-next export した上でWebApplicationは無謀な気がする。
-
-
-nextと同じImageの中にバックエンドのアプリも入れる。←表示変えたいだけなのに
-バックエンドごと中身変わることになるのでNG
+testは結合テスト用のブランチ
 
