@@ -51,7 +51,7 @@ jobs:
     - id: 'tag_format'
       name: 'tag format'
       env:
-          TAG_FORMAT: "%Y-%m-%dT%H:%M:%S%z"
+          TAG_FORMAT: "%Y%m%dT%H%M%SZ"
       run: echo "::set-output name=tag::$(date +${TAG_FORMAT})" 
     - name: 'docker build'
       run: |
