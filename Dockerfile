@@ -3,8 +3,13 @@ FROM node:${VARIANT} as build
 
 ENV NODE_ENV=production
 
-RUN mv docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+COPY . /home/node/
+RUN mv /home/node/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
+
+RUN chown -R node /home/node
+
+USER node
 
 WORKDIR /home/node
 
