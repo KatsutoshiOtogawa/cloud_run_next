@@ -63,3 +63,5 @@ jobs:
       with:
         service: 'hello-cloud-run'
         image: "asia-northeast2-docker.pkg.dev/${GCP_PROJECT}/testimage/busybox:${branch_name}"
+        region: 'asia-northeast2'
+
