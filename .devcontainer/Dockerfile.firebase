@@ -1,0 +1,21 @@
+ARG VARIANT="bullseye"
+FROM debian:${VARIANT}
+
+RUN apt update -y && apt upgrade -y
+
+RUN apt install -y npm openjdk-17-jdk-headless
+
+RUN npm install -g firebase-tools
+
+RUN useradd -m app -s /bin/bash
+
+WORKDIR /home/app
+
+COPY docker-entrypoint.sh.firebase /usr/local/bin/docker-entrypoint.sh
+
+RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
+
+USER app
+
+# ENTRYPOINT ["docker-entrypoint.sh"]
+# CMD ["run", "dev"]

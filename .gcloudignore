@@ -1,3 +1,10 @@
-.gitignore
+.devcontainer
 .github
-README.md
+.node_modules
+.next
+.package-lock.json
+.eslintrc.json
+.gcloudignore
+.gitignore
+Dockerfile
+READEME.md

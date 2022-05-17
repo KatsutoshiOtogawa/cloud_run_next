@@ -3,6 +3,9 @@ FROM node:${VARIANT} as build
 
 RUN apt update && apt upgrade -y
 
+RUN apt install -y libcap2-bin
+RUN setcap 'cap_net_bind_service=+ep' /usr/bin/node
+
 COPY . /home/node/
 RUN mv /home/node/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod 755 /usr/local/bin/docker-entrypoint.sh

@@ -1,0 +1,3 @@
+
+express のviewとしてnext使う場合は、apiのroutingだけexpress
+で設定しておいて、next側のpages配下のapiを使わない。

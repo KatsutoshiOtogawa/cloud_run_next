@@ -5,15 +5,27 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "export": "next export",
+    "start": "node server.mjs",
     "lint": "next lint"
   },
   "dependencies": {
+    "@google-cloud/connect-firestore": "^2.0.2",
+    "@google-cloud/firestore": "^4.15.1",
+    "body-parser": "^1.20.0",
+    "cookie-parser": "^1.4.6",
+    "csurf": "^1.11.0",
+    "express": "^4.18.0",
+    "express-session": "^1.17.2",
+    "firebase": "^9.6.11",
+    "joi": "^17.6.0",
     "next": "12.1.5",
     "react": "18.0.0",
     "react-dom": "18.0.0"
   },
   "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/express-session": "^1.17.4",
     "@types/node": "^16.11.7",
     "@types/node-fetch": "^2.6.1",
     "@types/react": "^18.0.5",

@@ -39,3 +39,5 @@ testは結合テスト用のブランチ
 
 developは本番環境と全く一緒にするので
 NODE_ENV=productionとする。
+
+nextはsecret envの問題でcloudBuildを使う必要があるかも。

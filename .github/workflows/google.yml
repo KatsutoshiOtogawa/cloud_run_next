@@ -53,8 +53,7 @@ jobs:
       env:
           TAG_FORMAT: "%Y%m%dT%H%M%SZ"
           TZ: 'Asia/Tokyo'
-      run: echo "::set-output name=tag::$(date +${TAG_FORMAT})" 
-
+      run: echo "::set-output name=tag::$(date +${TAG_FORMAT})$(echo ${{ github.sha }} | cut -b 1-8)"
     - name: 'docker build'
       run: |
         branch_name=$(echo ${{github.ref}} | rev | cut -d / -f 1 | rev)
