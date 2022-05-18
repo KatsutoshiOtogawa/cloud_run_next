@@ -15,6 +15,14 @@ COPY docker-entrypoint.sh.firebase /usr/local/bin/docker-entrypoint.sh
 
 RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
 
+COPY firebase.json /home/app/firebase.json
+RUN chown app /home/app/firebase.json
+
+# firebase login --no-localhost
+# firebase init emulators
+
+# 毎回実行する必要あり。
+# firebase emulators:start
 USER app
 
 # ENTRYPOINT ["docker-entrypoint.sh"]

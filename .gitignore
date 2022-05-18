@@ -5,6 +5,13 @@
 /.pnp
 .pnp.js
 
+# .devcontainer/volumes
+.devcontainer/volumes/*
+
+!/.devcontainer/volumes/.gitignore
+!/.devcontainer/volumes/firebase
+!/.devcontainer/volumes/firebase/.gitignore
+
 # testing
 /coverage
 

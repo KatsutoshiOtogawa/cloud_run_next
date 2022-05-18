@@ -18,8 +18,8 @@ services:
     command: sleep infinity
 
     env_file:
-        # Ensure that the variables in .env match the same variables in devcontainer.json
-        - .env
+      # Ensure that the variables in .env match the same variables in devcontainer.json
+      - .env
     # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
     # network_mode: service:db
 
@@ -40,7 +40,14 @@ services:
         VARIANT: bullseye
     command: sleep infinity
     restart: unless-stopped
+    ports:
+      - 9099:9099 # Auth
+      - 4000:4000 # Emulator Suite UI
+      - 5001:5001 # Cloud Functions
+      - 8080:8080 # Cloud Firestore
     # volumes:
+    #   # firebaseのログイン後の認証情報などが入る。
+    #   - ./volumes/firebase/.config:/home/app/.config
     env_file:
-        # Ensure that the variables in .env match the same variables in devcontainer.json
-        - .env
+      # Ensure that the variables in .env match the same variables in devcontainer.json
+      - .env

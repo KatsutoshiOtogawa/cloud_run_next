@@ -1,59 +1,99 @@
 // @ts-check
 
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+import React from "react";
+
+const schema = yup.object({
+  email: yup.string().required(),
+  password: yup.string().required(),
+}).required();
 
 /**
  * 
  * @returns {JSX.Element}
  */
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors, isSubmitSuccessful }
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      email: "",
+      password: ""
+    }
+  });
 
   /**
-   * 
-   * @param {React.ChangeEvent<HTMLInputElement>} event
+   * @description submit formで使う。
+   * @param {{email: string; password: string}} data
+   * @param {React.BaseSyntheticEvent} event
    */
-  const inputEmail = async (event) => {
+  const submitForm = (data, event) => {
 
-    setEmail(event.currentTarget.value);
+    /** @type {HTMLFormElement} */
+    const form = document.querySelector('#post_form');
+
+    /** @type {HTMLButtonElement} */
+    const form_button = form.querySelector('button');
+
+    /** @type {HTMLInputElement} */
+    const email = document.querySelector('input[name="email"]');
+
+    /** @type {HTMLInputElement} */
+    const password = document.querySelector('input[name="password"]');
+
+    email.value = getValues('email');
+    password.value = getValues('password');
+
+    // fire click event. and post.
+    form_button.click()
   }
 
-  /**
-   * 
-   * @param {React.ChangeEvent<HTMLInputElement>} event
-   */
-  const inputPassword = async (event) => {
-    setPassword(event.currentTarget.value);
-  }
   return (
       
     <div>
       <h1>ログイン画面</h1>
-      <form action="/user/login" method="post" >
+      {/* validation用 */}
+      <form id="validation_form" onSubmit={handleSubmit(submitForm)} >
         <div>
           <label htmlFor="email">Email:</label>
 
           <input
             id="email"
-            name="email"
-            value={email}
-            onInput={inputEmail}
+            {...register("email")}
           />
         </div>
 
+        {errors.email && <p>This field is required</p>}
         <div>
           <label htmlFor="password">Password:</label>
 
           <input
             id="password"
-            name="password"
             type="password"
-            value={password}
-            onInput={inputPassword}
+            {...register("password")}
           />
         </div>
+        {errors.password && <p>This field is required</p>}
 
+        <button type="submit">login</button>
+      </form>
+      <form id="post_form" action="/user/login" method="post" style={{display: 'none'}}>
+        <input
+          name="email"
+          defaultValue=""
+        />
+        <input
+          name="password"
+          type="password"
+          defaultValue=""
+        />
         <button type="submit">login</button>
       </form>
     </div>

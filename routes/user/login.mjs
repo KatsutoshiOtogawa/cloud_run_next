@@ -2,7 +2,6 @@
 import {Router} from 'express';
 import { checkUserPassword, createUserLoginSession ,checkUserLogin } from '../../loginAuth.mjs';
 import joi from 'joi'
-import { csrfProtection } from '../../csrf.mjs';
 
 /**
  * 
