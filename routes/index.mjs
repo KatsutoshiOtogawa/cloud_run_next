@@ -3,10 +3,10 @@
 import express from 'express';
 
 // ルーティング
-import { apiRouter } from './api/index.mjs';
-import { userRouter } from './user/index.mjs';
-import { adminRouter } from './admin/index.mjs';
-import { nologinRouter } from './nologin/index.mjs';
+import { apiRouter } from './api/router.mjs';
+import { userRouter } from './user/router.mjs';
+import { adminRouter } from './admin/router.mjs';
+import { nologinRouter } from './nologin/router.mjs';
 
 /**
  * @description 各々のルーティングをミドルウェアに登録する関数.

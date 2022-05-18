@@ -1,18 +1,23 @@
 // @ts-check
 import {Router} from 'express';
-import { loginRoute } from './login.mjs';
-import { homeRoute } from './home.mjs';
-import { logoutRoute } from './logout.mjs';
+import { checkUserLogin } from '../../loginAuth.mjs';
 
-const userRouter = Router();
-
-loginRoute(userRouter);
-logoutRoute(userRouter);
-
-// /user/
-homeRoute(userRouter);
-
+/**
+ * 
+ * @param {Router} router 
+ */
+function homeRoute (router) {
+  router.get("/", (req, res, next) => {
+    console.log(`Accessing the ${req.session['username']} ${req.originalUrl} from ip address: ${req.ip} method: GET`)
+    // ログインしてないならログイン画面に移す。
+    if (!checkUserLogin(req)) {
+      res.redirect('/user/login');
+    }
+    // 描画処理に渡す
+    next();
+  });
+}
 
 export {
-  userRouter
+  homeRoute
 }

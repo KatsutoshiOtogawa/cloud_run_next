@@ -2,7 +2,6 @@
 
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import csurf from 'csurf';
 import session from 'express-session';
 import {Firestore} from '@google-cloud/firestore';
 import {FirestoreStore} from '@google-cloud/connect-firestore';
@@ -22,32 +21,18 @@ const greetings = [
  */
 function registerMiddleware (server) {
 
-  
   server.use(express.json())
   server.use(express.urlencoded({ extended: true }));
+  server.use(cookieParser(process.env.COOKIE_PARSER_SECRET));
 
-  // session store
-  // server.use(
-  //   session({
-  //     store: new FirestoreStore({
-  //       dataset: new Firestore(),
-  //       kind: 'express-sessions',
-  //     }),
-  //     secret: 'my-secret',
-  //     resave: false,
-  //     saveUninitialized: true,
-  //   })
-  // );
+  server.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
+  }));
 
   routing(server);
 
-  // if (!req.session.views) {
-  //   req.session.views = 0;
-  //   req.session.greeting =
-  //     greetings[Math.floor(Math.random() * greetings.length)];
-  // }
-  // const views = req.session.views++;
-  // res.send(`${views} views for ${req.session.greeting}`);
 }
 
 export {

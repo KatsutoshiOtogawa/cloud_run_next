@@ -24,6 +24,7 @@ app.prepare().then(() => {
   // nextに渡して描画処理
   server.all('*', (req, res) => {
 
+    // pages配下のgetServerSidePropsに渡される。
     return handle(req, res)
   })
   server.listen(port, (err) => {

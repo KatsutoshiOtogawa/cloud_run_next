@@ -1,8 +1,8 @@
 // @ts-check
 import {Router} from 'express';
-import { checkUserPassword, checkUserLogin } from '../../loginAuth.mjs';
+import { checkUserPassword, createUserLoginSession ,checkUserLogin } from '../../loginAuth.mjs';
 import joi from 'joi'
-// const { warn } = require("firebase-functions/lib/logger");
+import { csrfProtection } from '../../csrf.mjs';
 
 /**
  * 
@@ -13,25 +13,26 @@ function loginRoute (router) {
   router.get("/login", (req, res, next) => {
 
     console.log(`Accessing the ${req.originalUrl} from ip address: ${req.ip} method: GET`)
+    // すでにログインしている場合はユーザーダッシュボードに移る
     if (checkUserLogin(req)) {
       // dashboardに回す
-      // res.redirect('/user/login');
+      res.redirect('/user/');
     }
-    // すでにログインしている場合はユーザーダッシュボードに移る
-    // if(req.session.username) {
-    //   next();
-    // }
-    // 描画処理に渡す
 
-    res.set()
+    // 描画処理に渡す
     next();
   });
 
   router.post("/login", (req, res, next) => {
 
-    console.log(req.body);
-
     console.log(`Accessing the ${req.originalUrl} from ip address: ${req.ip} method: POST`)
+    // すでにログインしている場合はユーザーダッシュボードに移る
+    if (checkUserLogin(req)) {
+      console.log('all ready login');
+      // dashboardに回す
+      res.redirect('/user');
+    }
+
     const { error: validationError, value } = joi.object().keys({
       email: joi.string().required(),
       password: joi.string().required(),
@@ -43,7 +44,6 @@ function loginRoute (router) {
       // ユーザー名またはパスワードが空です。
       next()
       return;
-      // return err.clErrCls(validationError)
     }
 
     /** @type {string} */
@@ -52,24 +52,20 @@ function loginRoute (router) {
     /** @type {string} */
     const password = value["password"];
 
-    if (checkUserLogin(req)) {
-      console.log('all ready login');
-      // dashboardに回す
-      // res.redirect('/user/login');
-    }
 
-    console.log(`Accessing the ${email} ${password}`)
+    console.log(`Accessing the ${email} ${password}`);
 
-    if (! checkUserPassword(email, password)) {
+    const {username, validated } = checkUserPassword(email, password);
+
+    if (! validated ) {
       console.log('password unmatch');
       // パスワードが一致しません。
       next();
       return;
     }
 
-    // dashboardにリダイレクト
-    // 描画処理に渡す
-    next();
+    createUserLoginSession(req, username);
+    res.redirect('/user/');
   });
 
 }
