@@ -18,10 +18,22 @@
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// This can be used to network with other containers or with the host.
-	// "forwardPorts": [3000, 5432],
+	// "forwardPorts": [
+	// 	9099, // Auth
+	// 	4000, // Emulator Suite UI
+	// 	5001, // Cloud Functions
+	// 	4001, // Cloud Functions
+	// 	8080  // Cloud Firestore
+	// ],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// 
+	// gcloud auth login --no-launch-browser
+	// gcloud config set project $GCP_PROJECT_ID
+	// firebase login --no-localhost
+	// firebase init emulators
+
+	// firebase emulators:start
 	"postCreateCommand": "npm install",
 
 	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.

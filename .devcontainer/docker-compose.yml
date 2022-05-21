@@ -9,7 +9,7 @@ services:
         # Update 'VARIANT' to pick an LTS version of Node.js: 16, 14.
         # Append -bullseye or -buster to pin to an OS version.
         # Use -bullseye variants on local arm64/Apple Silicon.
-        VARIANT: 16-bullseye
+        VARIANT: 18-bullseye
 
     volumes:
       - ..:/workspace:cached
@@ -26,28 +26,33 @@ services:
     # Uncomment the next line to use a non-root user for all processes.
     # user: node
 
+    # ports:
+    #   - 9099:9099 # Auth
+    #   - 4000:4000 # Emulator Suite UI
+    #   - 5001:5001 # Cloud Functions
+    #   - 8080:8080 # Cloud Firestore
     # Use "forwardPorts" in **devcontainer.json** to forward an app port locally. 
     # (Adding the "ports" property to this file will not forward from a Codespace.)
 
-  firebase:
-    build: 
-      context: .
-      dockerfile: Dockerfile.firebase
-      args:
-        # Update 'VARIANT' to pick an LTS version of Node.js: 16, 14, 12.
-        # Append -bullseye or -buster to pin to an OS version.
-        # Use -bullseye variants on local arm64/Apple Silicon.
-        VARIANT: bullseye
-    command: sleep infinity
-    restart: unless-stopped
-    ports:
-      - 9099:9099 # Auth
-      - 4000:4000 # Emulator Suite UI
-      - 5001:5001 # Cloud Functions
-      - 8080:8080 # Cloud Firestore
-    # volumes:
-    #   # firebaseのログイン後の認証情報などが入る。
-    #   - ./volumes/firebase/.config:/home/app/.config
-    env_file:
-      # Ensure that the variables in .env match the same variables in devcontainer.json
-      - .env
+  # firebase:
+  #   build: 
+  #     context: .
+  #     dockerfile: Dockerfile.firebase
+  #     args:
+  #       # Update 'VARIANT' to pick an LTS version of Node.js: 16, 14, 12.
+  #       # Append -bullseye or -buster to pin to an OS version.
+  #       # Use -bullseye variants on local arm64/Apple Silicon.
+  #       VARIANT: bullseye
+  #   command: sleep infinity
+  #   restart: unless-stopped
+  #   ports:
+  #     - 9099:9099 # Auth
+  #     - 4000:4000 # Emulator Suite UI
+  #     - 5001:5001 # Cloud Functions
+  #     - 8080:8080 # Cloud Firestore
+  #   # volumes:
+  #   #   # firebaseのログイン後の認証情報などが入る。
+  #   #   - ./volumes/firebase/.config:/home/app/.config
+  #   env_file:
+  #     # Ensure that the variables in .env match the same variables in devcontainer.json
+  #     - .env

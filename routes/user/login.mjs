@@ -15,7 +15,7 @@ function loginRoute (router) {
     // すでにログインしている場合はユーザーダッシュボードに移る
     if (checkUserLogin(req)) {
       // dashboardに回す
-      res.redirect('/user/');
+      res.redirect('/user');
     }
 
     // 描画処理に渡す
@@ -64,7 +64,7 @@ function loginRoute (router) {
     }
 
     createUserLoginSession(req, username);
-    res.redirect('/user/');
+    res.redirect('/user');
   });
 
 }
