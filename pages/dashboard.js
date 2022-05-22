@@ -3,7 +3,6 @@ import { GetServerSideProps, NextPage } from "next";
 
 import { useRouter } from "next/router";
 
-
 /**
 //  * @returns {NextPage<{ email: string }>}
  * @returns {JSX.Element}
@@ -25,4 +24,4 @@ export default function DashboardPage({ email }) {
       <button onClick={onLogout}>Logout</button>
     </div>
   );
-};
+}

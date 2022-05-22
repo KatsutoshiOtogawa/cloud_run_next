@@ -1,7 +1,7 @@
 // @ts-check
 
 /**
- * 
+ *
  * @returns {JSX.Element}
  */
 export default function Home() {
@@ -9,5 +9,5 @@ export default function Home() {
     <div>
       <h1>userhome画面</h1>
     </div>
-  )
+  );
 }

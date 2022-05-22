@@ -45,3 +45,14 @@ serviceAccountKey.json
 firebase-debug.log
 firestore-debug.log
 ui-debug.log
+
+._.*
+._*
+
+# 参考
+components
+assets
+views
+logo.svg
+index.tsx
+react-app-env.d.ts

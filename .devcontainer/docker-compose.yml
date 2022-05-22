@@ -34,25 +34,26 @@ services:
     # Use "forwardPorts" in **devcontainer.json** to forward an app port locally. 
     # (Adding the "ports" property to this file will not forward from a Codespace.)
 
-  # firebase:
-  #   build: 
-  #     context: .
-  #     dockerfile: Dockerfile.firebase
-  #     args:
-  #       # Update 'VARIANT' to pick an LTS version of Node.js: 16, 14, 12.
-  #       # Append -bullseye or -buster to pin to an OS version.
-  #       # Use -bullseye variants on local arm64/Apple Silicon.
-  #       VARIANT: bullseye
-  #   command: sleep infinity
-  #   restart: unless-stopped
-  #   ports:
-  #     - 9099:9099 # Auth
-  #     - 4000:4000 # Emulator Suite UI
-  #     - 5001:5001 # Cloud Functions
-  #     - 8080:8080 # Cloud Firestore
-  #   # volumes:
-  #   #   # firebaseのログイン後の認証情報などが入る。
-  #   #   - ./volumes/firebase/.config:/home/app/.config
-  #   env_file:
-  #     # Ensure that the variables in .env match the same variables in devcontainer.json
-  #     - .env
+  db:
+    image: postgres:latest
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./create-db-user.sql:/docker-entrypoint-initdb.d/create-db-user.sql
+    env_file:
+        # Ensure that the variables in .env match the same variables in devcontainer.json
+        - .env
+
+    # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+  adminer:
+    image: dpage/pgadmin4
+    restart: always
+    # network_mode: service:db
+    env_file:
+        # Ensure that the variables in .env match the same variables in devcontainer.json
+        - .env
+    ports:
+      - 8080:80
+      
